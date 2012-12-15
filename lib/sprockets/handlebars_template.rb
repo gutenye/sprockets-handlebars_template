@@ -7,7 +7,7 @@ module Sprockets
 
     @@options = {
       :target =>"Handlebars.TEMPLATES",
-      :wrapper_proc => proc { |source| "Handlebars.compile(#{source});" },
+      :wrapper_proc => proc { |source| %!Handlebars.compile(#{source.to_json});! },
       :key_name_proc => proc { |name| name.sub(%r~^templates/~, "") },
       :precompile => true,
       :precompile_proc => proc { |source| Barber::FilePrecompiler.call(source) }
@@ -35,12 +35,9 @@ module Sprockets
 
     def evaluate(scope, locals, &block)
       @options = self.class.options.merge(options)
-
       name = options[:key_name_proc].call(scope.logical_path)
-      source = data.to_json
-
       wrap_proc = options[ options[:precompile] ? :precompile_proc : :wrapper_proc]
-      source = wrap_proc.call(source)
+      source = wrap_proc.call(data)
 
       "#{options[:target]}['#{name}']=#{source}"
     end

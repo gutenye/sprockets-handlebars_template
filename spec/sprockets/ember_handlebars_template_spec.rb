@@ -1,10 +1,10 @@
 require "spec_helper"
-require "sprockets/ember_handlebars_template"
 
-HandlebarsTemplate = Sprockets::HandlebarsTemplate
-
-describe HandlebarsTemplate do
+describe "EmberHandlebarsTemplate" do
   before do
+    load "#{$spec_root}/../lib/sprockets/ember_handlebars_template.rb"
+    HandlebarsTemplate = Sprockets::HandlebarsTemplate unless defined?(HandlebarsTemplate)
+
     @template = HandlebarsTemplate.new { "foo" }
     @scope = Class.new do
       def logical_path
@@ -29,7 +29,7 @@ describe HandlebarsTemplate do
       precompile_proc: proc { |source| "#{source}1" }
     }
 
-    b = %{Ember.TEMPLATES['posts/index']="foo"1}
+    b = %{Ember.TEMPLATES['posts/index']=foo1}
 
     expect(@template.render(@scope)).to eq(b)
   end

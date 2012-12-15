@@ -1,7 +1,6 @@
 require "pd"
-require "sprockets/handlebars_template"
 
-$spec_dir = File.expand_path("..", __FILE__)
+$spec_root = File.expand_path("..", __FILE__)
 
 RSpec.configure do |config|
   def capture(stream=:stdout)

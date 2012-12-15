@@ -2,14 +2,14 @@
 
 |                |                                                             |
 |----------------|------------------------------------------------------       |
-| Homepage:      | https://github.com/GutenYe/sprockets-handlebars_template        |
-| Author:	       | Guten                                                 |
-| License:       | MIT-LICENSE                                                |
-| Documentation: | http://rubydoc.info/gems/sprockets-handlebars_template/frames                |
+| Homepage:      | https://github.com/GutenYe/sprockets-handlebars_template    |
+| Author:	       | Guten                                                       |
+| License:       | MIT-LICENSE                                                 |
+| Documentation: | http://rubydoc.info/gems/sprockets-handlebars_template/frames   |
 | Issue Tracker: | https://github.com/GutenYe/sprockets-handlebars_template/issues |
-| Ruby Versions: | 1.9.3, Rubinius, JRuby                           |
+| Ruby Versions: | 1.9.3, Rubinius, JRuby                                      |
 
-A simple handlebars template for sprockets, you can use it with Rails, Sinatra, Middleman, Sprockets, ... It supports Handlebars and Ember.Handlebars.
+A simple handlebars template for sprockets, you can use it with Sprockets, Middleman, Rails, Sinatra, ... It supports Handlebars and Ember.Handlebars.
 
 Getting started
 ---------------
@@ -25,25 +25,13 @@ For ember
 Configuration
 -------------
 
-For handlebars
-
 	Sprockets::HandlebarsTemplate.options = { 
-		:target =>"Handlebars.TEMPLATES",
+		:target => "Handlebars.TEMPLATES",
 		:wrapper_proc => proc { |source| "Handlebars.compile(#{source});" },
-		:key_name_proc => proc { |name| name.sub(%r~^templates/~, "") }
+		:key_name_proc => proc { |name| name.sub(%r~^templates/~, "") },
+		:precompile => true,
+		:precompile_proc => proc { |source| Barber::FilePrecompiler.call(source) }
 	}
-
-	Sprockets::HandlebarsTemplate.precompile = true     # compile handlebars in server side.
-
-For ember
-
-	Sprockets::EmberHandlebarsTemplate.options = {
-		:target =>"Ember.TEMPLATES",
-		:wrapper_proc => proc { |source| "Ember.Handlebars.compile(#{source});" },
-		:key_name_proc => proc { |name| name.sub(%r~^templates/~, "") }
-	}
-
-	Sprockets::EmberHandlebarsTemplate.precompile = true
 
 Install
 -------
