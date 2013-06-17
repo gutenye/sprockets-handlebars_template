@@ -22,7 +22,7 @@ module Sprockets
     end
 
     def self.engine_initialized?
-      String.respond_to?(:to_json) && respond_to?(:Barber)
+      String.respond_to?(:to_json) && const_defined?(:Barber)
     end
 
     def initialize_engine
