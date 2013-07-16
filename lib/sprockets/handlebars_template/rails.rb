@@ -1,5 +1,5 @@
 module Sprockets
-  class HandlebarsTemplate
+  class HandlebarsTemplate < Tilt::Template
     class RailsEngine < Rails::Engine
     end
   end
